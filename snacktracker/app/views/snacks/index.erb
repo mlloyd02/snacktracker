@@ -1,5 +1,15 @@
+<h1>Suggested Snacks</h1>
 <ul>
-  <% @snacks.each do |snack| %>
+  <% @optional_snacks.each do |snack| %>
+    <li>
+      <%= snack["name"] %>
+    </li>
+  <% end %>
+<ul>
+<br>
+<h1>Required Snacks</h1>
+<ul>
+  <% @required_snacks.each do |snack| %>
     <li>
       <%= snack["name"] %>
     </li>

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  get '/', to: 'snacks#index' 
+  get '/', to: 'snacks#index'
+  get 'suggestions', to: 'suggestions#index'
+  get '/suggestions/new', to: 'suggestions#new'
+  post '/suggestions', to: 'suggestions#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
