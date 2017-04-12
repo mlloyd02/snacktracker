@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/', to: 'snacks#index'
+  get '/votes', to: 'snacks#index'
   get 'suggestions', to: 'suggestions#index'
   get '/suggestions/new', to: 'suggestions#new'
   post '/suggestions', to: 'suggestions#create'

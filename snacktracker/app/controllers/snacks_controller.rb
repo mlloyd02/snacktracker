@@ -1,13 +1,11 @@
 class SnacksController < ApplicationController
 
   def index
-    snacks = Snack.new
-    @optional_snacks = snacks.get_optional
-    @required_snacks = snacks.get_required
+    @suggestions = Suggestion.where(:created_at => Date.today.beginning_of_month..Date.today.end_of_month)
+    @required_snacks = Snack.get_required
   end
 
   def new
-    @suggestion = Snack.new
   end
 
 end
