@@ -1,0 +1,14 @@
+<%= form_for @snack do |f| %>
+  <%= f.select(:id, options_for_select(@suggestions.map { |sug| [sug.optional_snack.name, sug.id] })) %>
+  <%= f.submit "Suggest Snack" %>
+<% end %>
+
+<%= form_for @snack do |f| %>
+  <%= f.label :name %>:
+  <%= f.text_field :name %><br />
+
+  <%= f.label :location %>:
+  <%= f.text_field :location %><br />
+
+  <%= f.submit "Submit Suggestion" %>
+<% end %>

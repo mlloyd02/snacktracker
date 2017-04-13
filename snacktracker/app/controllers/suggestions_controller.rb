@@ -10,19 +10,17 @@ class SuggestionsController < ApplicationController
   end
 
   def create
-    snack = Snack.new(sug_params)
-    snack.post_new_snack
-  end
-
-  def create_sug
-    binding.pry
-    sug = Suggestion.new(params)
-    sug.save
+    if params[:id]
+      puts params[:id]
+    else
+      snack = Snack.new(params)
+      snack.post_new_snack
+    end
   end
 
   private
-  def sug_params
-    params.require(:suggestion).permit(:name, :location)
+  def params
+    params.require(:suggestion).permit(:name, :location, :id)
   end
 
 end
