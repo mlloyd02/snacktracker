@@ -1,5 +1,5 @@
 <%= form_for @snack do |f| %>
-  <%= f.select(:id, options_for_select(@suggestions.map { |sug| [sug.optional_snack.name, sug.id] })) %>
+  <%= f.select :id, options_for_select(@not_suggested_snacks.map { |snack| [snack.name, snack.id] }), include_blank: true %>
   <%= f.submit "Suggest Snack" %>
 <% end %>
 

@@ -11,9 +11,9 @@
   <% @this_month_sugs.each do |sug| %>
   <tr>
     <td><button type="button" class="btn btn-default">Vote</button></td>
-    <td><%= sug.optional_snack.name %></td>
-    <td><%= sug.count_votes %></td>
-    <td><%= sug.optional_snack.last_purchase_date %></td>
+    <td><%= sug.name %></td>
+    <td></td>
+    <td><%= sug.last_purchase_date %></td>
     <td><%= sug.id %></td>
   </tr>
   <% end %>
