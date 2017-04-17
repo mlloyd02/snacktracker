@@ -16,10 +16,21 @@
                   <h3 class="panel-title">Suggest an Existing Snack</h3>
                 </div>
                 <div class="panel-body">
-                  <%= form_for @snack do |f| %>
+                  <!-- <%= form_for @snack do |f| %>
                     <%= f.select :id, options_for_select(@not_suggested_snacks.map { |snack| [snack.name, snack.id] }), include_blank: true %>
                     <%= f.submit "Suggest Snack", :class=>"btn btn-primary" %>
-                  <% end %>
+                  <% end %> -->
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Suggest Snack
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <% @not_suggested_snacks.each do |snack| %>
+                        <li><%= link_to snack.name, "/optional_snacks/#{snack.id}/suggestions", :method=>:post %></li>
+                      <% end %>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>

@@ -20,31 +20,22 @@ class OptionalSnacksController < ApplicationController
   end
 
   def create
-    if opt_snack_params[:id].present?
-      selected_snack = OptionalSnack.find opt_snack_params[:id]
-      selected_snack.suggestions.create
+    db_snacks = OptionalSnack.all.pluck(:name).map { |name| name.downcase }
+    if opt_snack_params[:name].present? && opt_snack_params[:location].present? && !db_snacks.include?(opt_snack_params[:name].downcase)
+      name, loc = opt_snack_params[:name], opt_snack_params[:location]
+      ApiService.post_new_snack(name, loc)
+      ApiService.sync_db
+
+      sug_snack = OptionalSnack.find_by name: name
+      sug_snack.suggestions.create
       cookies[:has_suggested] = { :value => "true", :expires => Date.today.at_beginning_of_month.next_month.in_time_zone }
       redirect_to optional_snacks_path
+    elsif opt_snack_params[:name].present? && opt_snack_params[:location].present? && db_snacks.include?(opt_snack_params[:name].downcase)
+      flash[:alert] = "A snack by that name already exists."
+      redirect_to new_optional_snack_path
     else
-
-      db_snacks = OptionalSnack.all.pluck(:name).map { |name| name.downcase }
-      if opt_snack_params[:name].present? && opt_snack_params[:location].present? && !db_snacks.include?(opt_snack_params[:name].downcase)
-        name, loc = opt_snack_params[:name], opt_snack_params[:location]
-        ApiService.post_new_snack(name, loc)
-        ApiService.sync_db
-
-        sug_snack = OptionalSnack.find_by name: name
-        sug_snack.suggestions.create
-        cookies[:has_suggested] = { :value => "true", :expires => Date.today.at_beginning_of_month.next_month.in_time_zone }
-        redirect_to optional_snacks_path
-      elsif opt_snack_params[:name].present? && opt_snack_params[:location].present? && db_snacks.include?(opt_snack_params[:name].downcase)
-        flash[:alert] = "A snack by that name already exists."
-        redirect_to new_optional_snack_path
-      else
-        flash[:alert] = "Please include both name and location in your submission."
-        redirect_to new_optional_snack_path
-      end
-
+      flash[:alert] = "Please include both name and location in your submission."
+      redirect_to new_optional_snack_path
     end
   end
 

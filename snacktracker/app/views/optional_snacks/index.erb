@@ -34,9 +34,9 @@
         <div class="col-md-2">
           <div class="row required">
             <h1>Always Purchased</h1>
-            <ul>
+            <ul class="list-group">
               <% @required_snacks.each do |snack| %>
-                <li>
+                <li class="list-group-item">
                   <%= snack["name"] %>
                 </li>
               <% end %>
