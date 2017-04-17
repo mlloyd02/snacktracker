@@ -8,4 +8,12 @@ class OptionalSnack < ActiveRecord::Base
     @location = location
   end
 
+  def this_month_sug
+    self.suggestions.where(:created_at => Date.today.beginning_of_month.in_time_zone..Time.current).first
+  end
+
+  def votes
+    this_month_sug.votes.count
+  end
+
 end

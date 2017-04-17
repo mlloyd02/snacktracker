@@ -1,14 +1,56 @@
-<%= form_for @snack do |f| %>
-  <%= f.select :id, options_for_select(@not_suggested_snacks.map { |snack| [snack.name, snack.id] }), include_blank: true %>
-  <%= f.submit "Suggest Snack" %>
-<% end %>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+      <% if flash[:alert] %>
+        <div class="alert alert-danger"><%= h flash[:alert] %></div>
+      <% end %>
+      <% unless cookies[:has_suggested] %>
+        <h1>Suggest a Snack</h1>
+        <p>You may suggest a snack to be voted on for next month by either choosing a previously suggested snack or suggesting something new!</p>
+        <br>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Suggest an Existing Snack</h3>
+                </div>
+                <div class="panel-body">
+                  <%= form_for @snack do |f| %>
+                    <%= f.select :id, options_for_select(@not_suggested_snacks.map { |snack| [snack.name, snack.id] }), include_blank: true %>
+                    <%= f.submit "Suggest Snack", :class=>"btn btn-primary" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="row">
+              <h2 class="or"><em>or..</em></h2>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Suggest a New Snack</h3>
+                </div>
+                <div class="panel-body">
+                  <%= form_for @snack do |f| %>
+                    <%= f.label :name %>:
+                    <%= f.text_field :name %><br />
 
-<%= form_for @snack do |f| %>
-  <%= f.label :name %>:
-  <%= f.text_field :name %><br />
+                    <%= f.label :location %>:
+                    <%= f.text_field :location %><br />
 
-  <%= f.label :location %>:
-  <%= f.text_field :location %><br />
-
-  <%= f.submit "Submit Suggestion" %>
-<% end %>
+                    <%= f.submit "Add Suggestion", :class=>"btn btn-primary" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

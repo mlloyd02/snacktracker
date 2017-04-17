@@ -1,30 +1,49 @@
-<h1>Suggested Snacks</h1>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="row">
+        <div class="col-md-10">
+          <div class="row sug-table">
+            <% if flash[:alert] %>
+              <div class="alert alert-danger"><%= h flash[:alert] %></div>
+            <% end %>
 
-<table class="table" style="width:100%">
-  <tr>
-    <th>Vote</th>
-    <th>Name</th>
-    <th># Votes</th>
-    <th>Last Purchased</th>
-    <th>Id</th>
-  </tr>
-  <% @this_month_sugs.each do |sug| %>
-  <tr>
-    <td><button type="button" class="btn btn-default">Vote</button></td>
-    <td><%= sug.name %></td>
-    <td></td>
-    <td><%= sug.last_purchase_date %></td>
-    <td><%= sug.id %></td>
-  </tr>
-  <% end %>
-</table>
+            <p>Votes Remaining: <%= @votes_remaining %></p>
 
+            <h1>Vote on Snacks</h1>
 
-<h1>Required Snacks</h1>
-<ul>
-  <% @required_snacks.each do |snack| %>
-    <li>
-      <%= snack["name"] %>
-    </li>
-  <% end %>
-<ul>
+            <table class="table" style="width:100%">
+              <tr>
+                <th>Vote</th>
+                <th>Name</th>
+                <th># Votes</th>
+                <th>Last Purchased</th>
+              </tr>
+              <% @this_month_snacks.each do |snack| %>
+              <tr>
+                <td><%= button_to 'Vote', "/optional_snacks/#{snack.id}/suggestions/#{snack.this_month_sug.id}/votes",
+                        :method=>:post, :class=>"btn btn-primary", :disabled=>@sug_ids.include?(snack.this_month_sug.id.to_s) %></td>
+                <td><%= snack.name %></td>
+                <td><%= snack.votes %></td>
+                <td><%= snack.last_purchase_date %></td>
+              </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="row required">
+            <h1>Always Purchased</h1>
+            <ul>
+              <% @required_snacks.each do |snack| %>
+                <li>
+                  <%= snack["name"] %>
+                </li>
+              <% end %>
+            <ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

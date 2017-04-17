@@ -1,3 +1,52 @@
 // Place all the styles related to the OptionalSnacks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  background-color: #F5F5F5 !important;
+}
+.header {
+  background-color: #7F8487;
+  height: 175px
+}
+.container-fluid {
+	padding: 0;
+}
+.logo {
+  float: left;
+  padding-top: 20px;
+}
+h1.title {
+  color: white;
+  display: inline;
+  position: relative;
+  top: 65px;
+  left: 70px;
+}
+.required {
+  border-left: 1px solid #7F8487;
+  height: 300px;
+  padding-left: 10px;
+}
+.required h1 {
+  font-size: 150%;
+}
+.sug-table {
+  padding: 10px;
+}
+.nav-links {
+  padding-top: 30px;
+  float: right;
+  font-size: 20px;
+}
+.nav-links li {
+  display: inline;
+  float: left;
+  padding-left: 30px;
+  font-weight: bold;
+}
+.nav-links a {
+  color: white;
+}
+.or {
+  text-align: center;
+}
