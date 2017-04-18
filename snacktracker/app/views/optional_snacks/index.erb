@@ -1,49 +1,53 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
-			<div class="row">
-        <div class="col-md-10">
-          <div class="row sug-table">
-            <% if flash[:alert] %>
-              <div class="alert alert-danger"><%= h flash[:alert] %></div>
-            <% end %>
-
-            <p>Votes Remaining: <%= @votes_remaining %></p>
-
-            <h1>Vote on Snacks</h1>
-
-            <table class="table" style="width:100%">
-              <tr>
-                <th>Vote</th>
-                <th>Name</th>
-                <th># Votes</th>
-                <th>Last Purchased</th>
-              </tr>
-              <% @this_month_snacks.each do |snack| %>
-              <tr>
-                <td><%= button_to 'Vote', "/optional_snacks/#{snack.id}/suggestions/#{snack.this_month_sug.id}/votes",
-                        :method=>:post, :class=>"btn btn-primary", :disabled=>@sug_ids.include?(snack.this_month_sug.id.to_s) %></td>
-                <td><%= snack.name %></td>
-                <td><%= snack.votes %></td>
-                <td><%= snack.last_purchase_date %></td>
-              </tr>
+      <% if flash[:api_error] %>
+        <div class="alert alert-danger"><%= h flash[:api_error] %></div>
+      <% else %>
+  			<div class="row">
+          <div class="col-md-10">
+            <div class="row sug-table">
+              <% if flash[:alert] %>
+                <div class="alert alert-danger"><%= h flash[:alert] %></div>
               <% end %>
-            </table>
+
+              <p>Votes Remaining: <%= @votes_remaining %></p>
+
+              <h1>Vote on Snacks</h1>
+
+              <table class="table" style="width:100%">
+                <tr>
+                  <th>Vote</th>
+                  <th>Name</th>
+                  <th># Votes</th>
+                  <th>Last Purchased</th>
+                </tr>
+                <% @this_month_sugs.each do |sug| %>
+                <tr>
+                  <td><%= button_to 'Vote', "/optional_snacks/#{sug.optional_snack_id}/suggestions/#{sug.id}/votes",
+                          :method=>:post, :class=>"btn btn-primary", :disabled=>@sug_ids.include?(sug.id.to_s) %></td>
+                  <td><%= sug.optional_snack.name %></td>
+                  <td><%= sug.votes.count %></td>
+                  <td><%= sug.optional_snack.last_purchase_date %></td>
+                </tr>
+                <% end %>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="row required">
+              <h1>Always Purchased</h1>
+              <ul class="list-group">
+                <% @required_snacks.each do |snack| %>
+                  <li class="list-group-item">
+                    <%= snack["name"] %>
+                  </li>
+                <% end %>
+              <ul>
+            </div>
           </div>
         </div>
-        <div class="col-md-2">
-          <div class="row required">
-            <h1>Always Purchased</h1>
-            <ul class="list-group">
-              <% @required_snacks.each do |snack| %>
-                <li class="list-group-item">
-                  <%= snack["name"] %>
-                </li>
-              <% end %>
-            <ul>
-          </div>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

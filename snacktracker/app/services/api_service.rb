@@ -1,7 +1,7 @@
 class ApiService
 
-  BASE_URL = 'https://api-snacks.nerderylabs.com'
-  API_KEY = '2bc3457a-bdfd-45f7-8083-5fab09d408f9'
+  BASE_URL = Rails.application.secrets.base_url
+  API_KEY = Rails.application.secrets.api_key
 
   def self.post_new_snack(name, location)
     conn = Faraday.new(:url => BASE_URL)
@@ -16,11 +16,14 @@ class ApiService
   def self.fetch_data
     url = BASE_URL + '/v1/snacks/?ApiKey=' + API_KEY
     response = Faraday.get url
-    data = JSON.parse response.body
   end
 
-  def self.sync_db
-    api_snacks = get_optional
+  def self.response_body_parsed response
+    body_parsed = JSON.parse response.body
+  end
+
+  def self.sync_db response
+    api_snacks = optional_snacks response
     api_snacks.each do |snack|
       s = OptionalSnack.find_or_initialize_by(api_id: snack["id"])
       s.name = snack["name"]
@@ -29,12 +32,12 @@ class ApiService
     end
   end
 
-  def self.get_optional
-    optional = fetch_data.select { |snack| snack["optional"] }
+  def self.optional_snacks response
+    optional = response_body_parsed(response).select { |snack| snack["optional"] }
   end
 
-  def self.get_required
-    required = fetch_data.select { |snack| !snack["optional"] }
+  def self.required_snacks response
+    required = response_body_parsed(response).select { |snack| !snack["optional"] }
   end
 
 end

@@ -1,6 +1,6 @@
 class CookieService
 
-  def self.get_voted_sug_ids_array cookie_val
+  def self.voted_sug_ids_array cookie_val
     if cookie_val
       voted_sug_ids_array = cookie_val.split(/\s*,\s*/)
     else
@@ -8,8 +8,8 @@ class CookieService
     end
   end
 
-  def self.get_votes_remaining cookie_val
-    voted_sug_ids_array = get_voted_sug_ids_array cookie_val
+  def self.votes_remaining cookie_val
+    voted_sug_ids_array = voted_sug_ids_array cookie_val
     votes = voted_sug_ids_array.count
     votes_remaining = 3 - votes
   end
@@ -22,9 +22,11 @@ class CookieService
     end
   end
 
-  def self.suggested?
+  def self.suggestion_cookie
+    cookie_to_set = { :value => "true", :expires => Date.today.at_beginning_of_month.next_month.in_time_zone }
   end
 
-
+  def self.suggested?
+  end
 
 end
