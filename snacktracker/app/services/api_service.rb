@@ -11,6 +11,7 @@ class ApiService
       req.headers['Content-Type'] = 'application/json'
       req.body = { :name => name, :location => location }.to_json
     end
+    response_body_parsed response
   end
 
   def self.fetch_data
@@ -22,6 +23,7 @@ class ApiService
     body_parsed = JSON.parse response.body
   end
 
+  #updates existing or creates new snacks in the database based on what we get from API
   def self.sync_db response
     api_snacks = optional_snacks response
     api_snacks.each do |snack|
@@ -38,6 +40,10 @@ class ApiService
 
   def self.required_snacks response
     required = response_body_parsed(response).select { |snack| !snack["optional"] }
+  end
+
+  def self.error_message
+    "There appears to be an issue connecting to the API. Please come back soon to cast your votes and make suggestions!"
   end
 
 end

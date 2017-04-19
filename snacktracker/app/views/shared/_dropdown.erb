@@ -1,0 +1,11 @@
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Suggest Snack
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <% not_suggested_snacks.each do |snack| %>
+      <li><%= link_to snack.name, "/optional_snacks/#{snack.id}/suggestions", :method=>:post %></li>
+    <% end %>
+  </ul>
+</div>

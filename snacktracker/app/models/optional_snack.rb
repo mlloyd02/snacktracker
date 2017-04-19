@@ -1,6 +1,5 @@
 class OptionalSnack < ActiveRecord::Base
   has_many :suggestions
-  validates :name, uniqueness: { case_sensitive: false }, presence: true
 
   attr_accessor :location
 
@@ -8,6 +7,7 @@ class OptionalSnack < ActiveRecord::Base
     @location = location
   end
 
+  #values for dropdown on Suggestions page
   def self.snacks_not_yet_suggested_for_month
     this_month_sug_ids = Suggestion.this_month.pluck(:optional_snack_id)
     where.not('id' => this_month_sug_ids)

@@ -1,0 +1,17 @@
+<table class="table" style="width:100%">
+  <tr>
+    <th>Vote</th>
+    <th>Name</th>
+    <th># Votes</th>
+    <th>Last Purchased</th>
+  </tr>
+  <% this_month_sugs.each do |sug| %>
+  <tr>
+    <td><%= button_to 'Vote', "/optional_snacks/#{sug.optional_snack_id}/suggestions/#{sug.id}/votes",
+            :method=>:post, :class=>"btn btn-primary", :disabled=>@sug_ids.include?(sug.id.to_s) %></td>
+    <td><%= sug.optional_snack.name %></td>
+    <td><%= sug.votes.count %></td>
+    <td><%= sug.optional_snack.last_purchase_date %></td>
+  </tr>
+  <% end %>
+</table>
