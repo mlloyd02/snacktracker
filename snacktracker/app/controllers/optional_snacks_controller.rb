@@ -1,6 +1,7 @@
 class OptionalSnacksController < ApplicationController
 
   def index
+    binding.pry
     response = ApiService.fetch_data
     if response.success?
       ApiService.sync_db response
@@ -19,7 +20,7 @@ class OptionalSnacksController < ApplicationController
     if response.success? && !cookies[:has_suggested]
       ApiService.sync_db response
       @snack = OptionalSnack.new
-      @not_suggested_snacks = OptionalSnack.snacks_not_yet_suggested
+      @not_suggested_snacks = OptionalSnack.snacks_not_yet_suggested_for_month
     elsif response.success? && cookies[:has_suggested]
       flash.now[:alert] = "You are only allowed one suggestion per month."
     else
@@ -28,7 +29,7 @@ class OptionalSnacksController < ApplicationController
   end
 
   def create
-    db_snacks = OptionalSnack.all.pluck(:name).map { |name| name.downcase }
+    db_snacks = OptionalSnack.all_snack_names_downcase
     name, loc = opt_snack_params[:name], opt_snack_params[:location]
     if name.present? && loc.present? && !db_snacks.include?(name.downcase)
       ApiService.post_new_snack(name, loc)

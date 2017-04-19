@@ -21,11 +21,6 @@ ActiveRecord::Schema.define(version: 20170410055552) do
     t.integer  "api_id"
   end
 
-  create_table "snacks", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "suggestions", force: :cascade do |t|
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false

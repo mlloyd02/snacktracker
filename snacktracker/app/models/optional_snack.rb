@@ -1,7 +1,6 @@
 class OptionalSnack < ActiveRecord::Base
   has_many :suggestions
-  validates :name, uniqueness: { case_sensitive: false }
-  validates :name, :location, presence: true
+  validates :name, uniqueness: { case_sensitive: false }, presence: true
 
   attr_accessor :location
 
@@ -9,22 +8,13 @@ class OptionalSnack < ActiveRecord::Base
     @location = location
   end
 
-  def self.snacks_suggested_this_month
-    this_month_sug_ids = Suggestion.this_month.pluck(:optional_snack_id)
-    where('id' => this_month_sug_ids).sort_by{ |snack| snack.this_month_sug.created_at}
-  end
-
-  def self.snacks_not_yet_suggested
+  def self.snacks_not_yet_suggested_for_month
     this_month_sug_ids = Suggestion.this_month.pluck(:optional_snack_id)
     where.not('id' => this_month_sug_ids)
   end
 
-  def this_month_sug
-    self.suggestions.this_month.first
-  end
-
-  def votes
-    this_month_sug.votes.count
+  def self.all_snack_names_downcase
+    all.pluck(:name).map { |name| name.downcase }
   end
 
 end

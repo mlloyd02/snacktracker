@@ -14,7 +14,7 @@ class CookieService
     votes_remaining = 3 - votes
   end
 
-  def self.create_or_update_vote_cookie cookie_val, sug_id
+  def self.votes_cookie cookie_val, sug_id
     if cookie_val
       cookie_to_set = { :value => cookie_val + ',' + sug_id, :expires => Date.today.at_beginning_of_month.next_month.in_time_zone }
     else
@@ -24,9 +24,6 @@ class CookieService
 
   def self.suggestion_cookie
     cookie_to_set = { :value => "true", :expires => Date.today.at_beginning_of_month.next_month.in_time_zone }
-  end
-
-  def self.suggested?
   end
 
 end
